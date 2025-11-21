@@ -15,19 +15,14 @@ The script performs the following sequence of operations for each account specif
 
 ## Prerequisites
 
-*   Python 3
-*   `boto3` (installable via `requirements.txt`)
+*   [uv](https://github.com/astral-sh/uv)
 *   AWS CLI with configured profiles
 
 ## Setup
 
-### 1. Install Dependencies
+### 1. Dependencies
 
-Navigate to this directory and run:
-
-```bash
-pip install -r requirements.txt
-```
+This script uses an embedded dependency management block (as per [PEP 723](https://peps.python.org/pep-0723/)) and requires `uv` to run. The necessary dependencies, like `boto3`, are declared at the top of the `batch_migration.py` script and will be automatically installed by `uv` in a temporary virtual environment.
 
 ### 2. Authentication
 
@@ -130,8 +125,21 @@ account_id
 
 Modify the `run.sh` script with your specific profile names and target OU ID, and populate the `accounts.csv` file with the account IDs to be migrated.
 
+The `run.sh` script is a convenience wrapper. You can also run the python script directly.
+
+Make the script executable:
 ```bash
-#!/bin/bash
+chmod +x batch_migration.py
+```
+
+Then, execute the script via the wrapper:
+
+```bash
+bash run.sh
+```
+
+Or directly:
+```bash
 ./batch_migration.py \
     --csv-file accounts.csv \
     --source-profile <your-source-profile> \
@@ -139,12 +147,6 @@ Modify the `run.sh` script with your specific profile names and target OU ID, an
     --target-ou-id <your-target-ou-id> \
     --max-failures 3 \
     --log-file migration_errors.log
-```
-
-Then, execute the script:
-
-```bash
-bash run.sh
 ```
 
 ## Error Handling

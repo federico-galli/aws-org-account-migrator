@@ -1,4 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# dependencies = [
+#   "boto3",
+# ]
+# ///
 import boto3
 import time
 import argparse
